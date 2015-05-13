@@ -17,7 +17,7 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
   FD3A5288F042B6850C66B31F09FE44734EB7990E
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV IOJS_VERSION 2.0.0
+ENV IOJS_VERSION 2.0.1
 
 RUN curl -SLO "https://iojs.org/dist/v$IOJS_VERSION/iojs-v$IOJS_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://iojs.org/dist/v$IOJS_VERSION/SHASUMS256.txt.asc" \
@@ -26,4 +26,5 @@ RUN curl -SLO "https://iojs.org/dist/v$IOJS_VERSION/iojs-v$IOJS_VERSION-linux-x6
   && tar -xzf "iojs-v$IOJS_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
   && rm "iojs-v$IOJS_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc
 
-RUN curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | tar -C /usr/local/bin/ -xJ --strip-components=1
+RUN curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | \
+	tar -C /usr/local/bin/ -xJ --strip-components=1
