@@ -58,6 +58,9 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
 RUN make -j7
 RUN make install
 
+# Make sure opencv libraries are accessible
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
 # Install io.js
 # gpg keys listed at https://github.com/iojs/io.js
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
