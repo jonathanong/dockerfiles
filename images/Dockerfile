@@ -4,11 +4,39 @@ MAINTAINER Jonathan Ong "me@jongleberry.com"
 RUN apt-get update; \
   apt-get -y upgrade
 
-RUN apt-get install -y python g++ make curl pkg-config
+# Install node.js dependencies and imagemagick dependencies
+RUN apt-get install -y \
+	python \
+	g++ \
+	make \
+	curl \
+	pkg-config \
+	libwebp-dev \
+	imagemagick \
+	libphash0-dev
 
+# install libvips for lovell/sharp
 RUN curl -s https://raw.githubusercontent.com/lovell/sharp/master/preinstall.sh | bash -
 
-RUN apt-get install -y libwebp-dev imagemagick libphash0-dev
+# install imagemagick
+# requires compilation for webp support
+RUN mkdir ImageMagick; \
+  curl http://www.imagemagick.org/download/ImageMagick.tar.gz | \
+  tar -C ImageMagick --strip-components=1 -xvz; \
+  cd ImageMagick; \
+  ./configure \
+		--with-webp \
+		--enable-hdri \
+    --without-dps \
+    --without-freetype \
+    --without-jbig \
+    --without-wmf \
+    --without-perl \
+    --without-x; \
+  make; \
+  make install; \
+  ldconfig /usr/local/lib; \
+  rm -rf ImageMagick
 
 # gpg keys listed at https://github.com/iojs/io.js
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
