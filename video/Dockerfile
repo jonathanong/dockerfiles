@@ -1,4 +1,4 @@
-FROM iojs:4.2.1
+FROM node:4.2.3
 MAINTAINER Jonathan Ong "me@jongleberry.com"
 
 RUN curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | \
